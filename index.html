@@ -7,6 +7,7 @@
 	<title>3data-sheets</title>
 	<script src="x3dom/x3dom-181.js"></script>
 	<link rel="stylesheet" href="x3dom/x3dom.css">
+	<link rel="shortcut icon" href="assets/fav.ico" type="image/x-icon">
 
 	<style>
 		body,
@@ -22,11 +23,11 @@
 
 		#messages {
 			position: absolute;
-			bottom: 0px;
+			bottom: 0%;
 			left: 0px;
 			padding: 10px;
 			font-family: monospace;
-			font-size: 50px;
+			font-size: 60px;
 		}
 	</style>
 </head>
@@ -35,19 +36,23 @@
 <body>
 	<x3d PrimitiveQuality='Low' disableDoubleClick="true">
 		<scene>
-			<inline url='assets/scene.x3d' />
+			<DirectionalLight direction='0 -1 4' intensity='1' color='1 1 1'></DirectionalLight>
+			<DirectionalLight direction='0 -1 -4' intensity='.5' color='1 1 1'></DirectionalLight>
+			<Viewpoint position="0 3 10" orientation="0 0 0 0" centerOfRotation="0 0 0" fieldOfView="1"></Viewpoint>
+			<navigationInfo type='"examin"' headlight='false' speed='5' avatarSize='20'></navigationInfo>
+
+			<Transform translation='0 0 0'>
+				<inline url='assets/olfa.x3d' />
+			</Transform>
+			<Transform translation='0 4 0' scale="2 2 2">
+				<inline id="icInline" url='assets/dip14.x3d' />
+			</Transform>
+			<Background skyColor='0.1 0.1 0.5, 0.5 0.7 0.9, 0.9 0.9 1' skyAngle='0.9, 1.5' />
 		</scene>
 	</x3d>
 
 	<div id="messages"></div>
 	<script>
-		// let textbox = document.getElementById('messages');
-		// let textStream = "";
-		// function log(message) {
-		// 	textStream = textStream + '<br/>' + message;
-		// 	textbox.innerHTML = textStream;
-		// }
-
 		const icChips = [
 			{
 				name: "NE555",
@@ -85,80 +90,40 @@
 			}
 		];
 
-
 		let textbox = document.getElementById('messages');
 
-		// function handlePinClick(pin) {
-		// 	let icName = "NE555"
-		// 	let targetedIc = icChips.find(ic => ic.name === icName)
-		// 	let message = `${targetedIc.name} <br> ${targetedIc.pins[pin - 1].name}<br>${targetedIc.pins[pin - 1].function}`
-		// 	textbox.innerHTML = message;
-		// 	let targetedPinTransform = document.querySelector(`[DEF="IC_Lead_${pin}"]`)
-		// 	targetedPinTransform.querySelector("Material").setAttribute('USE', 'IC_Lead_Gold')
-		// 	console.log(targetedPinTransform);
-		// }
-
-
-		function handlePinClick(pin) {
+		function handlePinClick(pin, elemnt) {
 			let icName = "NE555";
 			let targetedIc = icChips.find(ic => ic.name === icName);
 
 			let message = `
 			${targetedIc.name} <br> 
 			${targetedIc.pins[pin - 1].name}<br>
-			${targetedIc.pins[pin - 1].function}`;
-
+			${targetedIc.pins[pin - 1].function}
+			`;
 			textbox.innerHTML = message;
 
-			// let targetedPinTransform = document.querySelector(`[DEF="IC_Lead_${pin}"]`);
-
-			// if (targetedPinTransform) {
-			// 	// Navigate to Material inside Shape > Appearance
-			// 	let material = targetedPinTransform.querySelector("Shape Appearance Material");
-
-			// 	if (material) {
-			// 		material.setAttribute('diffuseColor', '1 0.84 0'); // Gold color (R, G, B)
-			// 		console.log("Material updated:", material);
-			// 	} else {
-			// 		console.error("Material not found inside Appearance");
-			// 	}
-			// } else {
-			// 	console.error(`Transform IC_Lead_${pin} not found`);
-			// }
+			elemnt.getElementsByTagName('Material')[0].setAttribute('diffuseColor', `0 1 0`)
+			setTimeout(() => {
+				elemnt.getElementsByTagName('Material')[0].
+					setAttribute('diffuseColor', "0.82 0.82 0.78")
+			}, 500)
 		}
-
-		let targetedPinTransform = document.querySelector(`[DEF="IC_Lead_1"]`);
-
-		if (targetedPinTransform) {
-			console.log(targetedPinTransform);
-
-			let material = targetedPinTransform.querySelector("Shape Appearance Material");
-
-			if (material) {
-				material.setAttribute('diffuseColor', '1 0.84 0'); // Gold color (R, G, B)
-				console.log("Material updated:", material);
-			} else {
-				console.error("Material not found inside Appearance");
-			}
-		} else {
-			console.error(`Transform not found`);
-		}
+		console.log(document.getElementById("icInline"));
+		// document.getElementById("icInline").setAttribute("url", 'assets/dip16.x3d')
 
 
-		// <Material DEF="MA_IC_Leads_Silver"
+		// document.querySelector("inline").setAttribute("url", "/assets/dip20.x3d")
+		// console.log(document.querySelector("inline").getAttribute("url"));
 
-		// function randoncolor(elemnt) {
-		// 	let randomRvalue = Math.random()
-		// 	let randomGvalue = Math.random()
-		// 	let randomBvalue = Math.random()
-		// 	elemnt.getElementsByTagName('Material')[0].setAttribute('diffuseColor', `${randomRvalue} ${randomGvalue} ${randomBvalue}`)
-		// }
 
-		// setTimeout(() => {
-		// 	document.querySelector('[DEF="MA_Opaque(102_178_38)"]').setAttribute('diffuseColor', '0 1 0');
-		// }, 8000)
 	</script>
 
 </body>
 
 </html>
+
+<!-- // if (document.getElementById("sound").getAttribute('enabled') == "false")
+// document.getElementById("sound").setAttribute('enabled', 'true');
+// else
+// document.getElementById("sound").setAttribute('enabled', 'false'); -->

@@ -2,6 +2,15 @@
 <!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.3//EN" "http://www.web3d.org/specifications/x3d-3.3.dtd">
 <X3D profile='Immersive' version='3.3' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.3.xsd'>
     <Scene>
+
+    <!-- this file is not in use now -->
+    <!-- this file is not in use now -->
+    <!-- this file is not in use now -->
+    <!-- this file is not in use now -->
+    <!-- this file is not in use now -->
+    <!-- this file is not in use now -->
+    <!-- this file is not in use now -->
+
         <!-- light -->
         <DirectionalLight direction='0 -1 4' intensity='1' color='1 1 1'></DirectionalLight>
         <DirectionalLight direction='0 -1 -4' intensity='.5' color='1 1 1'></DirectionalLight> 
@@ -22,9 +31,8 @@
         </Transform>
 
         <Transform translation='0 4 0' scale="2 2 2" >
-          <inline url='dip8-stand.x3d' /> 
+          <inline  url='dip8.x3d' /> 
         </Transform>
-
         </Transform>
     </Scene>
 </X3D>
