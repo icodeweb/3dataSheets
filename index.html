@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>3data-sheets</title>
+	<script src="x3dom/x3dom-181.js"></script>
+	<link rel="stylesheet" href="x3dom/x3dom.css">
+
+	<style>
+		body,
+		html,
+		x3d {
+			border: none;
+			margin: 0px;
+			padding: 0px;
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+		}
+
+		#messages {
+			position: absolute;
+			bottom: 0px;
+			left: 0px;
+			padding: 10px;
+			font-family: monospace;
+			font-size: 50px;
+		}
+	</style>
+</head>
+
+
+<body>
+	<x3d PrimitiveQuality='Low' disableDoubleClick="true">
+		<scene>
+			<inline url='assets/scene.x3d' />
+		</scene>
+	</x3d>
+
+	<div id="messages"></div>
+	<script>
+		// let textbox = document.getElementById('messages');
+		// let textStream = "";
+		// function log(message) {
+		// 	textStream = textStream + '<br/>' + message;
+		// 	textbox.innerHTML = textStream;
+		// }
+
+		const icChips = [
+			{
+				name: "NE555",
+				type: "Timer IC",
+				pins: [
+					{ number: 1, name: "GND", function: "Ground" },
+					{ number: 2, name: "TRIG", function: "Trigger" },
+					{ number: 3, name: "OUT", function: "Output" },
+					{ number: 4, name: "RESET", function: "Reset" },
+					{ number: 5, name: "CTRL", function: "Control Voltage" },
+					{ number: 6, name: "THRS", function: "Threshold" },
+					{ number: 7, name: "DISCH", function: "Discharge" },
+					{ number: 8, name: "VCC", function: "Supply Voltage" }
+				],
+				voltageRange: "4.5V - 15V",
+				package: "DIP-8",
+				applications: ["Timers", "Pulse Generation", "Oscillators"]
+			},
+			{
+				name: "LM358",
+				type: "Operational Amplifier",
+				pins: [
+					{ number: 1, name: "OUT1", function: "Op-Amp 1 Output" },
+					{ number: 2, name: "IN1-", function: "Op-Amp 1 Inverting Input" },
+					{ number: 3, name: "IN1+", function: "Op-Amp 1 Non-Inverting Input" },
+					{ number: 4, name: "GND", function: "Ground" },
+					{ number: 5, name: "IN2+", function: "Op-Amp 2 Non-Inverting Input" },
+					{ number: 6, name: "IN2-", function: "Op-Amp 2 Inverting Input" },
+					{ number: 7, name: "OUT2", function: "Op-Amp 2 Output" },
+					{ number: 8, name: "VCC", function: "Supply Voltage" }
+				],
+				voltageRange: "3V - 32V",
+				package: "DIP-8",
+				applications: ["Signal Amplification", "Active Filters"]
+			}
+		];
+
+
+		let textbox = document.getElementById('messages');
+
+		// function handlePinClick(pin) {
+		// 	let icName = "NE555"
+		// 	let targetedIc = icChips.find(ic => ic.name === icName)
+		// 	let message = `${targetedIc.name} <br> ${targetedIc.pins[pin - 1].name}<br>${targetedIc.pins[pin - 1].function}`
+		// 	textbox.innerHTML = message;
+		// 	let targetedPinTransform = document.querySelector(`[DEF="IC_Lead_${pin}"]`)
+		// 	targetedPinTransform.querySelector("Material").setAttribute('USE', 'IC_Lead_Gold')
+		// 	console.log(targetedPinTransform);
+		// }
+
+
+		function handlePinClick(pin) {
+			let icName = "NE555";
+			let targetedIc = icChips.find(ic => ic.name === icName);
+
+			let message = `
+			${targetedIc.name} <br> 
+			${targetedIc.pins[pin - 1].name}<br>
+			${targetedIc.pins[pin - 1].function}`;
+
+			textbox.innerHTML = message;
+
+			// let targetedPinTransform = document.querySelector(`[DEF="IC_Lead_${pin}"]`);
+
+			// if (targetedPinTransform) {
+			// 	// Navigate to Material inside Shape > Appearance
+			// 	let material = targetedPinTransform.querySelector("Shape Appearance Material");
+
+			// 	if (material) {
+			// 		material.setAttribute('diffuseColor', '1 0.84 0'); // Gold color (R, G, B)
+			// 		console.log("Material updated:", material);
+			// 	} else {
+			// 		console.error("Material not found inside Appearance");
+			// 	}
+			// } else {
+			// 	console.error(`Transform IC_Lead_${pin} not found`);
+			// }
+		}
+
+		let targetedPinTransform = document.querySelector(`[DEF="IC_Lead_1"]`);
+
+		if (targetedPinTransform) {
+			console.log(targetedPinTransform);
+
+			let material = targetedPinTransform.querySelector("Shape Appearance Material");
+
+			if (material) {
+				material.setAttribute('diffuseColor', '1 0.84 0'); // Gold color (R, G, B)
+				console.log("Material updated:", material);
+			} else {
+				console.error("Material not found inside Appearance");
+			}
+		} else {
+			console.error(`Transform not found`);
+		}
+
+
+		// <Material DEF="MA_IC_Leads_Silver"
+
+		// function randoncolor(elemnt) {
+		// 	let randomRvalue = Math.random()
+		// 	let randomGvalue = Math.random()
+		// 	let randomBvalue = Math.random()
+		// 	elemnt.getElementsByTagName('Material')[0].setAttribute('diffuseColor', `${randomRvalue} ${randomGvalue} ${randomBvalue}`)
+		// }
+
+		// setTimeout(() => {
+		// 	document.querySelector('[DEF="MA_Opaque(102_178_38)"]').setAttribute('diffuseColor', '0 1 0');
+		// }, 8000)
+	</script>
+
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.3//EN" "http://www.web3d.org/specifications/x3d-3.3.dtd">
+<X3D profile='Immersive' version='3.3' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.3.xsd'>
+    <Scene>
+        <!-- light -->
+        <DirectionalLight direction='0 -1 4' intensity='1' color='1 1 1'></DirectionalLight>
+        <DirectionalLight direction='0 -1 -4' intensity='.5' color='1 1 1'></DirectionalLight> 
+        <!-- world -->
+        <WorldInfo title='3data-sheets' />
+        <Background skyColor='0.1 0.1 0.5, 0.5 0.7 0.9, 0.9 0.9 1' skyAngle='0.9, 1.5' />
+        <Viewpoint position="0 3 10" orientation="0 0 0 0" centerOfRotation="0 0 0" fieldOfView="1" description=""></Viewpoint>
+        <navigationInfo type='"examin"' headlight='false' speed='5' avatarSize='20' ></navigationInfo>
+        <!-- elemnts -->
+        <Transform DEF='WORLD' translation='0 0 0' >
+          <Transform translation='0 0 0' rotation='0 1 0 3.14159'>
+                <Shape>
+                    <Box size='120 0.5 80' />
+                    <Appearance>
+                        <ImageTexture url='olfa.jpg'/>
+                    </Appearance>
+                </Shape>
+        </Transform>
+
+        <Transform translation='0 4 0' scale="2 2 2" >
+          <inline url='dip8-stand.x3d' /> 
+        </Transform>
+
+        </Transform>
+    </Scene>
+</X3D>
+<!-- drafts -->
+<!-- light -->
+<!-- Spotlight for highlights -->
+<!-- <SpotLight position='10 10 0' direction='0 -1 0' intensity='1' cutOffAngle='0.8' beamWidth='0.7'></SpotLight> -->
+<!-- <PointLight location='50 50 0' intensity='1' color='1 1 1' radius='100'></PointLight> -->
+<!-- Point light for general illumination -->
+<!-- <PointLight location='0 8 0' intensity='0.6' color='1 1 1' radius='30'></PointLight> -->
+<!-- Animation -->
+<!-- <TimeSensor DEF='NORMAL_TIMER' cycleInterval='10' loop='true' /> -->
+<!-- <OrientationInterpolator DEF='SPIN_ME' key='0.00 0.25 0.50 0.75 1.00' keyValue='0 1 0 0 0 1 0 1.57079 0 1 0 3.14159 0 1 0 4.7123889 0 1 0 6.2831852' /> -->
+<!-- <ROUTE fromNode='NORMAL_TIMER' fromField='fraction_changed' toNode='SPIN_ME' toField='set_fraction'/> -->
+<!-- <ROUTE fromNode='SPIN_ME' fromField='value_changed' toNode='WORLD' toField='rotation'/> -->
+<!-- ALERT the world has been animated to spin, you may wish to remove this if your editing this file!!! -->
+<!-- inline -->
+<!-- <Transform translation='0 3 33' scale="4.5 4.5 4.5" >
+    <inline url='pcb.x3d' /> 
+</Transform> -->
+<!-- Text -->
+<!-- <Transform translation='3 3.3 -25' scale="4.5 4.5 4.5" rotation='1 0 0 -1.5708'>
+  <Shape>
+    <Appearance>
+      <Material 
+        diffuseColor='1 1 1'          
+      ></Material>
+    </Appearance>
+    <Text 
+      string='music : 아버지, video: unveil.fr'
+      solid='false'
+      maxExtent='0.0'>
+      <FontStyle 
+  family="MONOSPACE"              
+        justify='"MIDDLE" "MIDDLE"'  
+        size='0.3'                       
+        spacing='1.2'>
+      </FontStyle>
+    </Text>
+  </Shape>
+</Transform> -->
+
+<!-- sound -->
+<!-- <Sound>
+    <AudioClip loop='true' enabled="true" url='tomorrow.mp3'/>    
+</Sound> -->
