@@ -23,11 +23,12 @@
 
 		#messages {
 			position: absolute;
-			bottom: 0%;
-			left: 0px;
 			padding: 10px;
 			font-family: monospace;
-			font-size: 60px;
+			font-size: 50px;
+			z-index: 10;
+			left: 50px;
+			bottom: 5%;
 		}
 	</style>
 </head>
@@ -45,7 +46,18 @@
 				<inline url='assets/olfa.x3d' />
 			</Transform>
 			<Transform translation='0 4 0' scale="2 2 2">
-				<inline id="icInline" url='assets/dip24.x3d' />
+				<inline id="icInline" />
+			</Transform>
+			<Transform translation='4 12 -25' scale="7 7 7" rotation='0 0 0 -1.5708'>
+				<Shape>
+					<Appearance>
+						<Material diffuseColor='1 1 1'></Material>
+					</Appearance>
+					<Text id="textElemnt" string='music : 아버지, video: unveil.fr' solid='false' maxExtent='0.0'>
+						<FontStyle family="MONOSPACE" justify='"MIDDLE" "MIDDLE"' size='0.3' spacing='1.2'>
+						</FontStyle>
+					</Text>
+				</Shape>
 			</Transform>
 			<Background skyColor='0.1 0.1 0.5, 0.5 0.7 0.9, 0.9 0.9 1' skyAngle='0.9, 1.5' />
 		</scene>
@@ -70,7 +82,6 @@
 					{ number: 8, name: "VCC", function: "Supply Voltage" }
 				],
 				voltageRange: "4.5V - 15V",
-				package: "DIP-8",
 				applications: ["Timers", "Pulse Generation", "Oscillators"]
 			},
 			{
@@ -87,45 +98,52 @@
 					{ number: 8, name: "VCC", function: "Supply Voltage" }
 				],
 				voltageRange: "3V - 32V",
-				package: "DIP-8",
 				applications: ["Signal Amplification", "Active Filters"]
 			}
 		];
 
+		function whatPackage(icPins) {
+			let package = `DIP-${icPins.length}`
+			return package;
+		}
+
+		icChips.forEach(chip => {
+			chip.package = whatPackage(chip.pins);
+		});
+
 		let textbox = document.getElementById('messages');
 
+		let icName = "NE555";
+		let targetedIc = icChips.find(ic => ic.name === icName);
+		let textElemnt = document.getElementById("textElemnt")
+		textElemnt.setAttribute("string", `${targetedIc.name}`)
 		function handlePinClick(pin, elemnt) {
-			let icName = "NE555";
-			let targetedIc = icChips.find(ic => ic.name === icName);
-
 			let message = `
-			${targetedIc.name} <br> 
-			${targetedIc.pins[pin - 1].name}<br>
+			${targetedIc.name}
+			${targetedIc.pins[pin - 1].number}
+			${targetedIc.pins[pin - 1].name}
 			${targetedIc.pins[pin - 1].function}
 			`;
-			textbox.innerHTML = message;
+			textElemnt.setAttribute("string", message)
+			// textbox.innerHTML = message;
 
 			elemnt.getElementsByTagName('Material')[0].setAttribute('diffuseColor', `0 1 0`)
 			setTimeout(() => {
 				elemnt.getElementsByTagName('Material')[0].
 					setAttribute('diffuseColor', "0.82 0.82 0.78")
-			}, 500)
+				// textbox.innerHTML = "";
+			}, 1000)
 		}
-		console.log(document.getElementById("icInline"));
-		// document.getElementById("icInline").setAttribute("url", 'assets/dip16.x3d')
 
+		let icInlineElemnt = document.getElementById("icInline");
+		icInlineElemnt.setAttribute("url", `assets/${targetedIc.package}.x3d`)
 
-		// document.querySelector("inline").setAttribute("url", "/assets/dip20.x3d")
-		// console.log(document.querySelector("inline").getAttribute("url"));
-
-
+		// document.querySelector("body").addEventListener("mousemove", (event) => {
+		// 	textbox.style.left = `${event.clientX + 10}px`;
+		// 	textbox.style.top = `${event.clientY + 10}px`;
+		// });
 	</script>
 
 </body>
 
 </html>
-
-<!-- // if (document.getElementById("sound").getAttribute('enabled') == "false")
-// document.getElementById("sound").setAttribute('enabled', 'true');
-// else
-// document.getElementById("sound").setAttribute('enabled', 'false'); -->
