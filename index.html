@@ -16,10 +16,9 @@
 			border: none;
 			margin: 0px;
 			padding: 0px;
-			width: 100%;
-			height: 100%;
 			overflow: hidden;
 		}
+
 
 		#messages {
 			position: absolute;
@@ -29,6 +28,23 @@
 			z-index: 10;
 			left: 50px;
 			bottom: 5%;
+		}
+
+		.contols {
+			position: absolute;
+			top: 10%;
+			left: 5%;
+		}
+
+		input {
+			background-color: transparent;
+			border: none;
+			font-size: 50px;
+			outline: none;
+			padding: 10px;
+			;
+			border: none;
+			outline: none;
 		}
 	</style>
 </head>
@@ -63,86 +79,19 @@
 		</scene>
 
 	</x3d>
+	<!-- <div class="contols">
+		<input list="icList" name="ic" id="searchElemnt" placeholder="Search...">
+		<datalist id="icList">
+			<option value="4017">
+			<option value="4011">
+			<option value="NE555">
+			<option value="4020">
+		</datalist>
+		<div id="messages"></div>
+	</div> -->
 
-	<div id="messages"></div>
-	<script>
-		const icChips = [
-			{
-				name: "NE555",
-				type: "Timer IC",
-				pins: [
-					{ number: 1, name: "GND", function: "Ground" },
-					{ number: 2, name: "TRIG", function: "Trigger" },
-					{ number: 3, name: "OUT", function: "Output" },
-					{ number: 4, name: "RESET", function: "Reset" },
-					{ number: 5, name: "CTRL", function: "Control Voltage" },
-					{ number: 6, name: "THRS", function: "Threshold" },
-					{ number: 7, name: "DISCH", function: "Discharge" },
-					{ number: 8, name: "VCC", function: "Supply Voltage" }
-				],
-				voltageRange: "4.5V - 15V",
-				applications: ["Timers", "Pulse Generation", "Oscillators"]
-			},
-			{
-				name: "LM358",
-				type: "Operational Amplifier",
-				pins: [
-					{ number: 1, name: "OUT1", function: "Op-Amp 1 Output" },
-					{ number: 2, name: "IN1-", function: "Op-Amp 1 Inverting Input" },
-					{ number: 3, name: "IN1+", function: "Op-Amp 1 Non-Inverting Input" },
-					{ number: 4, name: "GND", function: "Ground" },
-					{ number: 5, name: "IN2+", function: "Op-Amp 2 Non-Inverting Input" },
-					{ number: 6, name: "IN2-", function: "Op-Amp 2 Inverting Input" },
-					{ number: 7, name: "OUT2", function: "Op-Amp 2 Output" },
-					{ number: 8, name: "VCC", function: "Supply Voltage" }
-				],
-				voltageRange: "3V - 32V",
-				applications: ["Signal Amplification", "Active Filters"]
-			}
-		];
-
-		function whatPackage(icPins) {
-			let package = `DIP-${icPins.length}`
-			return package;
-		}
-
-		icChips.forEach(chip => {
-			chip.package = whatPackage(chip.pins);
-		});
-
-		let textbox = document.getElementById('messages');
-
-		let icName = "NE555";
-		let targetedIc = icChips.find(ic => ic.name === icName);
-		let textElemnt = document.getElementById("textElemnt")
-		textElemnt.setAttribute("string", `${targetedIc.name}`)
-		function handlePinClick(pin, elemnt) {
-			let message = `
-			${targetedIc.name}
-			${targetedIc.pins[pin - 1].number}
-			${targetedIc.pins[pin - 1].name}
-			${targetedIc.pins[pin - 1].function}
-			`;
-			textElemnt.setAttribute("string", message)
-			// textbox.innerHTML = message;
-
-			elemnt.getElementsByTagName('Material')[0].setAttribute('diffuseColor', `0 1 0`)
-			setTimeout(() => {
-				elemnt.getElementsByTagName('Material')[0].
-					setAttribute('diffuseColor', "0.82 0.82 0.78")
-				// textbox.innerHTML = "";
-			}, 1000)
-		}
-
-		let icInlineElemnt = document.getElementById("icInline");
-		icInlineElemnt.setAttribute("url", `assets/${targetedIc.package}.x3d`)
-
-		// document.querySelector("body").addEventListener("mousemove", (event) => {
-		// 	textbox.style.left = `${event.clientX + 10}px`;
-		// 	textbox.style.top = `${event.clientY + 10}px`;
-		// });
-	</script>
-
+	<script type="module" src="main.js"></script>
+	<script type="module" src="ic.js"></script>
 </body>
 
 </html>
