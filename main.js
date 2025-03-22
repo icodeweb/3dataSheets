@@ -3247,6 +3247,8 @@ icList.forEach((chip, index) => {
     let optionElemnt = document.createElement("option");
     optionElemnt.value = chip.name;
     searchDatalist.appendChild(optionElemnt)
+    console.log(chip.package);
+
 });
 
 
