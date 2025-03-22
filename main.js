@@ -3238,16 +3238,20 @@ const icList = [
     }
 ]
 
+let searchDatalist = document.getElementById("icList");
+
 // set chip id and  package by chip pin count
 icList.forEach((chip, index) => {
     chip.id = index + 1;
     chip.package = `DIP-${chip.pins.length}`;
+    let optionElemnt = document.createElement("option");
+    optionElemnt.value = chip.name;
+    searchDatalist.appendChild(optionElemnt)
 });
 
-// target the chip
-let icName = "CD4007";
-let targetedIc = icList.find(ic => ic.name === icName);
 
+// target the chip
+let targetedIc = icList.find(ic => ic.name == "CD40106");
 // load the right x3d chip model
 let icInlineElemnt = document.getElementById("icInline");
 icInlineElemnt.setAttribute("url", `assets/${targetedIc.package}.x3d`)
@@ -3257,10 +3261,23 @@ let textbox = document.getElementById('messages');
 let textElemnt = document.getElementById("textElemnt")
 textElemnt.setAttribute("string", `${targetedIc.name}`)
 
+
+function loadChip(icName) {
+    // target the chip
+    targetedIc = icList.find(ic => ic.name === icName);
+    console.log(targetedIc);
+    // load the right x3d chip model
+    icInlineElemnt.setAttribute("url", `assets/${targetedIc.package}.x3d`)
+    // set the ic name text
+    textElemnt.setAttribute("string", `${targetedIc.name} `)
+}
+
+
+
 // what happens when we click a pin
 function handlePinClick(pin, elemnt) {
     let message =
-        `${targetedIc.pins[pin - 1].num},${targetedIc.pins[pin - 1].name},${targetedIc.pins[pin - 1].explanation}`;
+        `${targetedIc.pins[pin - 1].num},${targetedIc.pins[pin - 1].name},${targetedIc.pins[pin - 1].explanation} `;
     textElemnt.setAttribute("string", message)
     textbox.innerHTML = message;
 
@@ -3268,10 +3285,20 @@ function handlePinClick(pin, elemnt) {
     setTimeout(() => {
         elemnt.getElementsByTagName('Material')[0].
             setAttribute('diffuseColor', "0.82 0.82 0.78")
-        textElemnt.setAttribute("string", "")
-        textbox.innerHTML = "";
+        textElemnt.setAttribute("string", `${targetedIc.name} `)
+        textbox.innerHTML = ``;
     }, 1000)
 }
+
+
+let searchElemnt = document.getElementById("searchElemnt");
+searchElemnt.addEventListener("change", (event) => {
+    loadChip(event.target.value)
+    // loadChip("CD" + event.target.value)
+})
+
+
+
 
 
 // function logDuplicates(icArray) {
