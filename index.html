@@ -22,12 +22,15 @@
 
 		#messages {
 			position: absolute;
-			padding: 10px;
+			padding-inline: 10px;
 			font-family: monospace;
-			font-size: 50px;
+			font-size: 60px;
+			/* letter-spacing: 10px; */
+			/* text-wrap: nowrap; */
 			z-index: 10;
-			left: 50px;
-			bottom: 5%;
+			top: 80%;
+			text-align: center;
+			width: 100%;
 		}
 
 		.contols {
@@ -79,7 +82,7 @@
 		</scene>
 
 	</x3d>
-	<!-- <div class="contols">
+	<div class="contols">
 		<input list="icList" name="ic" id="searchElemnt" placeholder="Search...">
 		<datalist id="icList">
 			<option value="4017">
@@ -87,11 +90,10 @@
 			<option value="NE555">
 			<option value="4020">
 		</datalist>
-		<div id="messages"></div>
-	</div> -->
+	</div>
+	<div id="messages"></div>
 
-	<script type="module" src="main.js"></script>
-	<script type="module" src="ic.js"></script>
+	<script src="main.js"></script>
 </body>
 
 </html>
