@@ -3244,6 +3244,8 @@ icInlineElemnt.setAttribute("url", `assets/${targetedIc.package}.x3d`)
 
 // set the ic name text
 let textbox = document.getElementById('messages');
+let textElemnt = document.getElementById("textElemnt")
+textElemnt.setAttribute("string", `${targetedIc.name}`)
 
 
 function loadChip(icName) {
@@ -3252,6 +3254,8 @@ function loadChip(icName) {
     console.log(targetedIc);
     // load the right x3d chip model
     icInlineElemnt.setAttribute("url", `assets/${targetedIc.package}.x3d`)
+    // set the ic name text
+    textElemnt.setAttribute("string", `${targetedIc.name} `)
 }
 
 
@@ -3260,12 +3264,14 @@ function loadChip(icName) {
 function handlePinClick(pin, elemnt) {
     let message =
         `${targetedIc.pins[pin - 1].num},${targetedIc.pins[pin - 1].name},${targetedIc.pins[pin - 1].explanation} `;
+    textElemnt.setAttribute("string", message)
     textbox.innerHTML = message;
 
     elemnt.getElementsByTagName('Material')[0].setAttribute('diffuseColor', `0 1 0`)
     setTimeout(() => {
         elemnt.getElementsByTagName('Material')[0].
             setAttribute('diffuseColor', "0.82 0.82 0.78")
+        textElemnt.setAttribute("string", `${targetedIc.name} `)
         textbox.innerHTML = ``;
     }, 1000)
 }
