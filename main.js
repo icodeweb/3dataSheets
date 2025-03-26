@@ -1,4 +1,4 @@
-const icList = [
+const OGicList = [
     {
         name: "CD4001",
         type: "Logic Gate IC",
@@ -3219,6 +3219,14 @@ const icList = [
         voltageRange: "3V - 18V"
     }
 ]
+let icList = removeDuplicates(OGicList)
+function removeDuplicates(icArray) {
+    const uniqueICs = new Map();
+    icArray.forEach(ic => {
+        uniqueICs.set(ic.name, ic);
+    });
+    return Array.from(uniqueICs.values());
+}
 
 let searchDatalist = document.getElementById("icList");
 
@@ -3229,57 +3237,63 @@ icList.forEach((chip, index) => {
     let optionElemnt = document.createElement("option");
     optionElemnt.value = chip.name;
     searchDatalist.appendChild(optionElemnt)
-    console.log(chip.name);
-    console.log(chip.package);
-
 });
 
 
-// target the chip
-let targetedIc = icList.find(ic => ic.name == "CD40106");
-// load the right x3d chip model
-let icInlineElemnt = document.getElementById("icInline");
-icInlineElemnt.setAttribute("url", `assets/${targetedIc.package}.x3d`)
-// icInlineElemnt.setAttribute("url", `assets/DIP-20.x3d`)
+// set the ic and pin data text
+let chipDataElemnt = document.getElementById('chipData');
+let pinDataElemnt = document.getElementById('pinData');
 
-// set the ic name text
-let textbox = document.getElementById('messages');
 
+let targetedIc = icList.find(ic => ic.name === "40106");
 
 function loadChip(icName) {
-    // target the chip
     targetedIc = icList.find(ic => ic.name === icName);
-    console.log(targetedIc);
+    let icInlineElemnt = document.getElementById("icInline");
     // load the right x3d chip model
     icInlineElemnt.setAttribute("url", `assets/${targetedIc.package}.x3d`)
+    let chipData =
+        `<table>
+            <tr><td class="field">Name</td><td class="dataField">${targetedIc.name}</td></tr>
+            <tr><td class="field">Type</td><td class="dataField">${targetedIc.type}</td></tr>
+            <tr><td class="field">Function</td><td class="dataField">${targetedIc.function}</td></tr>
+            <tr><td class="field">package</td><td class="dataField">${targetedIc.package}</td></tr>
+            <!--<tr><td class="field">Alternatives</td><td class="dataField">${targetedIc.alternatives}</td></tr>-->
+            <tr><td class="field">Voltage Range</td><td class="dataField">${targetedIc.voltageRange}</td></tr>
+            <tr><td class="field" colspan="1" style="text-align: left;"><a href="${targetedIc.datasheet}">Datasheet</a></td></tr>
+        </table>`
+    chipDataElemnt.innerHTML = chipData;
+    pinDataElemnt.innerHTML = `
+        <table>
+            <tr>
+                <td class="field" colspan="2" style="text-align: center;">Click any pin</td>
+            </tr>
+        </table>`;
 }
 
 
 
-// what happens when we click a pin
 function handlePinClick(pin, elemnt) {
-    let message =
-        `${targetedIc.pins[pin - 1].num},${targetedIc.pins[pin - 1].name},${targetedIc.pins[pin - 1].explanation} `;
-    textbox.innerHTML = message;
-
+    let pinData =
+        `<table>
+            <tr><td class="field">number</td><td class="dataField">${targetedIc.pins[pin - 1].num}</td></tr>
+            <tr><td class="field">name</td><td class="dataField">${targetedIc.pins[pin - 1].name}</td></tr>
+            <tr><td class="field">description</td><td class="dataField">${targetedIc.pins[pin - 1].explanation}</td></tr>
+        </table>`
+    pinDataElemnt.innerHTML = pinData;
     elemnt.getElementsByTagName('Material')[0].setAttribute('diffuseColor', `0 1 0`)
     setTimeout(() => {
         elemnt.getElementsByTagName('Material')[0].
             setAttribute('diffuseColor', "0.82 0.82 0.78")
-        textbox.innerHTML = ``;
     }, 1000)
 }
-
 
 let searchElemnt = document.getElementById("searchElemnt");
 searchElemnt.addEventListener("change", (event) => {
     loadChip(event.target.value)
-    // loadChip("CD" + event.target.value)
 })
 
-
-
-
+loadChip("CD40106")
 
 // function logDuplicates(icArray) {
 //     const seen = new Set();
@@ -3295,25 +3309,4 @@ searchElemnt.addEventListener("change", (event) => {
 
 //     console.log("Duplicates :", [...duplicates]);
 // }
-
-// function removeDuplicates(icArray) {
-//     const uniqueICs = new Map();
-//     icArray.forEach(ic => {
-//         uniqueICs.set(ic.name, ic);
-//     });
-//     return Array.from(uniqueICs.values());
-// }
-
-// console.log("icList has :" + icList.length + " ic");
-// logDuplicates(icList);
-// console.log("uniqueICs:");
-// let icNames = '';
-// removeDuplicates(icList).forEach(ic => {
-//     if (ic.pins.length === 15) {
-//         icNames += ic.pins.length + ","
-//     }
-// })
-// console.log(icNames)
-// console.log(removeDuplicates(icList));
-
-
+// logDuplicates(icList)

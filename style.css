@@ -1,0 +1,94 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: monospace;
+    text-transform: lowercase;
+}
+
+x3d {
+    width: 70vw;
+    max-width: 70vw;
+    height: 100vh;
+}
+
+body {
+    display: flex;
+    overflow: hidden;
+    scrollbar-width: 0px;
+}
+
+.contols {
+    width: 30vw;
+    max-width: 30vw;
+    padding: 3rem 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    /* justify-content: center; */
+}
+
+input {
+    width: 100%;
+    font-size: 20px;
+    border: none;
+    outline: none;
+}
+
+#chipData,
+#pinData {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+tr {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+table {
+    gap: 1rem;
+}
+
+.field,
+.dataField {
+    font-size: 20px;
+}
+
+.field {
+    font-weight: 600;
+    margin-block: 10px;
+}
+
+a {
+    color: blue;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:visited {
+    color: blue;
+}
+
+.x3dom-progress,
+.x3dom-progress-spinner,
+#x3domProgessCount {
+    display: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.x3dom-progress-spinner {
+    display: block;
+}
+
+.x3dom-progress {
+    position: absolute;
+    transform: translateX(-50%);
+    top: 50%;
+    left: 50%;
+}
